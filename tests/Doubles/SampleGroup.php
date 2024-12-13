@@ -9,8 +9,6 @@ class SampleGroup implements Group
 {
     /**
      * The name of the group.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -19,12 +17,8 @@ class SampleGroup implements Group
 
     /**
      * Defines the rule membership in the group.
-     *
-     * @param mixed $user
-     *
-     * @return boolean
      */
-    public function hasMember($user = null): bool
+    public function hasMember(mixed $user = null): bool
     {
         return true;
     }

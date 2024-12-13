@@ -2,16 +2,14 @@
 
 namespace Tests\Console;
 
-use Mockery;
-use Tests\TestCase;
-use Opensoft\Rollout\Feature;
-use Opensoft\Rollout\Rollout;
+use Illuminate\Console\Command;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Console\Kernel;
-use Jaspaul\LaravelRollout\Drivers\Cache;
-use Jaspaul\LaravelRollout\FeaturePresenter;
 use Jaspaul\LaravelRollout\Console\RolloutCommand;
+use Jaspaul\LaravelRollout\Drivers\Cache;
+use Opensoft\Rollout\Rollout;
+use Tests\TestCase;
 
 class RolloutCommandTest extends TestCase
 {
@@ -27,13 +25,10 @@ class RolloutCommandTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     */
-    function render_feature_as_a_table_renders_the_feature_as_a_table()
+    function test_render_feature_as_a_table_renders_the_feature_as_a_table(): void
     {
         Artisan::call('rollout:test', [
-            'feature' => 'derp'
+            'feature' => 'derp',
         ]);
 
         $output = $this->app[Kernel::class]->output();
@@ -45,12 +40,15 @@ class RolloutCommandTest extends TestCase
 class TestCommand extends RolloutCommand
 {
     protected $signature = 'rollout:test {feature}';
+
     protected $description = 'A simple helper for testing.';
 
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }
 
@@ -58,17 +56,15 @@ class TestServiceProvider extends ServiceProvider
 {
     /**
      * Boot the service provider.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->app->singleton(Rollout::class, function ($app) {
             return new Rollout(new Cache($app->make('cache.store')));
         });
 
         $this->commands([
-            TestCommand::class
+            TestCommand::class,
         ]);
     }
 }

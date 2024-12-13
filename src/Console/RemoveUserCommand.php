@@ -2,6 +2,7 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
 use Jaspaul\LaravelRollout\Helpers\User;
 
 class RemoveUserCommand extends RolloutCommand
@@ -23,15 +24,15 @@ class RemoveUserCommand extends RolloutCommand
     /**
      * Removes the provided user from the feature. Note this will create
      * the feature as a side effect.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $userIdentifier = $this->argument('user');
 
         $this->rollout->deactivateUser($name, new User($userIdentifier));
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

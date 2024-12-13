@@ -1,19 +1,15 @@
 <?php
 
-namespace Tests\Drivers;
+namespace Tests\Console;
 
-use Tests\TestCase;
-use Opensoft\Rollout\Rollout;
 use Illuminate\Support\Facades\Artisan;
 use Jaspaul\LaravelRollout\Helpers\User;
-use Jaspaul\LaravelRollout\Drivers\Cache;
+use Opensoft\Rollout\Rollout;
+use Tests\TestCase;
 
 class DeactivateCommandTest extends TestCase
 {
-    /**
-     * @test
-     */
-    function running_the_command_will_deactivate_the_feature_for_all_users()
+    function test_running_the_command_will_deactivate_the_feature_for_all_users(): void
     {
         $store = app()->make('cache.store')->getStore();
 
@@ -22,15 +18,15 @@ class DeactivateCommandTest extends TestCase
         $rollout->activatePercentage('derp', 82);
 
         $this->assertEquals('derp', $store->get('rollout.feature:__features__'));
-        $this->assertEquals('82|1||', $store->get('rollout.feature:derp'));
+        $this->assertEquals('82|1|||[]', $store->get('rollout.feature:derp'));
 
         Artisan::call('rollout:deactivate', [
-            'feature' => 'derp'
+            'feature' => 'derp',
         ]);
 
         $store = app()->make('cache.store')->getStore();
 
         $this->assertEquals('derp', $store->get('rollout.feature:__features__'));
-        $this->assertEquals('0|||', $store->get('rollout.feature:derp'));
+        $this->assertEquals('0||||[]', $store->get('rollout.feature:derp'));
     }
 }

@@ -1,19 +1,15 @@
 <?php
 
-namespace Tests\Drivers;
+namespace Tests\Console;
 
-use Tests\TestCase;
-use Opensoft\Rollout\Rollout;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Contracts\Console\Kernel;
-use Jaspaul\LaravelRollout\Drivers\Cache;
+use Illuminate\Support\Facades\Artisan;
+use Opensoft\Rollout\Rollout;
+use Tests\TestCase;
 
 class DeleteCommandTest extends TestCase
 {
-    /**
-     * @test
-     */
-    function running_the_command_with_a_feature_will_remove_the_corresponding_feature()
+    function test_running_the_command_with_a_feature_will_remove_the_corresponding_feature(): void
     {
         $store = app()->make('cache.store')->getStore();
 
@@ -23,7 +19,7 @@ class DeleteCommandTest extends TestCase
         $this->assertEquals('derp', $store->get('rollout.feature:__features__'));
 
         Artisan::call('rollout:delete', [
-            'feature' => 'derp'
+            'feature' => 'derp',
         ]);
 
         $store = app()->make('cache.store')->getStore();
@@ -31,13 +27,10 @@ class DeleteCommandTest extends TestCase
         $this->assertEquals('', $store->get('rollout.feature:__features__'));
     }
 
-    /**
-     * @test
-     */
-    function running_the_command_outputs_a_success_statement()
+    function test_running_the_command_outputs_a_success_statement(): void
     {
         Artisan::call('rollout:delete', [
-            'feature' => 'derp'
+            'feature' => 'derp',
         ]);
 
         $output = $this->app[Kernel::class]->output();

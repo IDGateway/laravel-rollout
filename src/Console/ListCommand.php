@@ -2,6 +2,7 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Jaspaul\LaravelRollout\FeaturePresenter;
 use Jaspaul\LaravelRollout\Helpers\FeatureTable;
@@ -24,10 +25,8 @@ class ListCommand extends RolloutCommand
 
     /**
      * Outputs a table containing the features configured in rollout.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $presenters = (new Collection($this->rollout->features()))
             ->map(function ($feature) {
@@ -35,5 +34,7 @@ class ListCommand extends RolloutCommand
             });
 
         (new FeatureTable($presenters))->render($this);
+
+        return Command::SUCCESS;
     }
 }
