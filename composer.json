@@ -11,22 +11,21 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.2.5",
-        "illuminate/cache": "^7|^8|^9|^10",
-        "illuminate/config": "^7|^8|^9|^10",
-        "illuminate/console": "^7|^8|^9|^10",
-        "illuminate/database": "^7|^8|^9|^10",
-        "illuminate/support": "^7|^8|^9|^10",
-        "opensoft/rollout": "2.2.*"
+        "php": "^8.3",
+        "laravel/framework": "^12.0",
+        "opensoft/rollout": "v2.3.0",
+        "illuminate/console": "^12.3.0",
+        "illuminate/support": "^12.3.0",
+        "illuminate/database": "^12.3.0",
+        "illuminate/auth": "^12.28.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.1",
-        "illuminate/container": "^7|^8|^9",
-        "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^5.0",
-        "php-coveralls/php-coveralls": "^2.1",
-        "phpunit/phpunit": "^8.0",
-        "squizlabs/php_codesniffer": "^2.8"
+        "friendsofphp/php-cs-fixer": "^3.87.2",
+        "mockery/mockery": "^1.6.12",
+        "orchestra/canvas": "v10.0.2",
+        "php-coveralls/php-coveralls": "^2.8.0",
+        "phpunit/phpunit": "^12.3.10",
+        "squizlabs/php_codesniffer": "v4.0.0-RC1"
     },
     "autoload": {
         "psr-4": {
