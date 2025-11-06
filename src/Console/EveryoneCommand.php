@@ -2,6 +2,7 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
 use Jaspaul\LaravelRollout\Helpers\User;
 
 class EveryoneCommand extends RolloutCommand
@@ -22,13 +23,13 @@ class EveryoneCommand extends RolloutCommand
 
     /**
      * Updates the feature to rollout to 100% of users!
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $this->rollout->activatePercentage($name, 100);
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

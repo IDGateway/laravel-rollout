@@ -2,6 +2,8 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
+
 class DeleteCommand extends RolloutCommand
 {
     /**
@@ -20,13 +22,13 @@ class DeleteCommand extends RolloutCommand
 
     /**
      * Deletes the provided feature.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $this->rollout->remove($name);
         $this->line(sprintf("The '%s' flag was removed.", $name));
+
+        return Command::SUCCESS;
     }
 }

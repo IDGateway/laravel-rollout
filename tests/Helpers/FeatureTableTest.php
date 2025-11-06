@@ -12,10 +12,7 @@ use Jaspaul\LaravelRollout\Helpers\FeatureTable;
 
 class FeatureTableTest extends TestCase
 {
-    /**
-     * @test
-     */
-    function get_headers_should_return_same_keys_as_the_feature_presenter_to_array_method()
+    function test_get_headers_should_return_same_keys_as_the_feature_presenter_to_array_method(): void
     {
         $presenter = new FeaturePresenter(new Feature('test'));
 
@@ -24,10 +21,7 @@ class FeatureTableTest extends TestCase
         $this->assertSame(array_keys($presenter->toArray()), $table->getHeaders()->toArray());
     }
 
-    /**
-     * @test
-     */
-    function get_rows_will_only_return_rows_for_feature_presenters_in_the_collection()
+    function test_get_rows_will_only_return_rows_for_feature_presenters_in_the_collection(): void
     {
         $presenter = new FeaturePresenter(new Feature('test'));
         $collection = new Collection([$presenter, [], 'hi', 'alpha']);
@@ -38,10 +32,7 @@ class FeatureTableTest extends TestCase
         $this->assertSame($presenter->toArray(), $table->getRows()->first());
     }
 
-    /**
-     * @test
-     */
-    function render_renders_a_table_with_the_tables_rows_and_headers()
+    public function test_render_renders_a_table_with_the_tables_rows_and_headers(): void
     {
         $presenter = new FeaturePresenter(new Feature('test'));
         $collection = new Collection([$presenter, [], 'hi', 'alpha']);

@@ -2,6 +2,7 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
 use Jaspaul\LaravelRollout\Helpers\User;
 
 class RemoveGroupCommand extends RolloutCommand
@@ -23,10 +24,8 @@ class RemoveGroupCommand extends RolloutCommand
     /**
      * Removes the provided user from the feature. Note this will create
      * the feature as a side effect.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $group = $this->argument('group');
@@ -34,5 +33,7 @@ class RemoveGroupCommand extends RolloutCommand
         $this->rollout->deactivateGroup($name, $group);
 
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

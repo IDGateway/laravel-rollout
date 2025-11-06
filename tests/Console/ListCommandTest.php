@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Drivers;
+namespace Tests\Console;
 
 use Tests\TestCase;
 use Opensoft\Rollout\Feature;
@@ -11,10 +11,7 @@ use Jaspaul\LaravelRollout\FeaturePresenter;
 
 class ListCommandTest extends TestCase
 {
-    /**
-     * @test
-     */
-    function it_returns_an_empty_table_if_there_are_no_stored_features()
+    function test_it_returns_an_empty_table_if_there_are_no_stored_features(): void
     {
         Artisan::call('rollout:list', []);
 
@@ -36,10 +33,7 @@ class ListCommandTest extends TestCase
         $this->assertTrue((bool) preg_match('/[+-]+/', $output[2]));
     }
 
-    /**
-     * @test
-     */
-    function it_returns_the_stored_features_in_the_table()
+    function test_it_returns_the_stored_features_in_the_table(): void
     {
         $rollout = $this->app[Rollout::class];
 

@@ -2,6 +2,7 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
 use Jaspaul\LaravelRollout\Helpers\User;
 
 class AddUserCommand extends RolloutCommand
@@ -23,10 +24,8 @@ class AddUserCommand extends RolloutCommand
     /**
      * Adds the provided user to the requested feature. Note this will create
      * the feature as a side effect.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $userIdentifier = $this->argument('user');
@@ -34,5 +33,7 @@ class AddUserCommand extends RolloutCommand
         $this->rollout->activateUser($name, new User($userIdentifier));
 
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

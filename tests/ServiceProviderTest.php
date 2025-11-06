@@ -25,31 +25,28 @@ use Tests\Doubles\SampleGroup;
 
 class ServiceProviderTest extends TestCase
 {
-    private $container;
-    private $serviceProvider;
+    private Container $container;
+    private ServiceProvider $serviceProvider;
 
-    /**
-     * @before
-     */
-    public function setup_service_provider()
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->setUpServiceProvider();
+    }
+
+    public function setUpServiceProvider(): void
     {
         $this->container = Container::getInstance();
         $this->serviceProvider = new ServiceProvider($this->container);
     }
 
-    /**
-     * @test
-     */
-    public function ensure_a_service_provider_can_be_constructed()
+    public function test_ensure_a_service_provider_can_be_constructed(): void
     {
         $this->assertInstanceOf(ServiceProvider::class, $this->serviceProvider);
         $this->assertInstanceOf(IlluminateServiceProvider::class, $this->serviceProvider);
     }
 
-    /**
-     * @test
-     */
-    public function booting_registers_a_cache_backed_rollout_singleton_into_the_container()
+    public function test_booting_registers_a_cache_backed_rollout_singleton_into_the_container(): void
     {
         $this->container->singleton(Config::class, function ($app) {
             $config = Mockery::mock(Config::class);
@@ -73,10 +70,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(Rollout::class, $result);
     }
 
-    /**
-     * @test
-     */
-    public function booting_registers_a_database_backed_rollout_singleton_into_the_container()
+    public function test_booting_registers_a_database_backed_rollout_singleton_into_the_container(): void
     {
         $this->container->singleton(Config::class, function ($app) {
             $config = Mockery::mock(Config::class);
@@ -109,10 +103,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(Rollout::class, $result);
     }
 
-    /**
-     * @test
-     */
-    public function booting_registers_the_groups_into_rollout()
+    public function test_booting_registers_the_groups_into_rollout(): void
     {
         $this->container->singleton(Config::class, function ($app) {
             $config = Mockery::mock(Config::class);
@@ -147,10 +138,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(Rollout::class, $result);
     }
 
-    /**
-     * @test
-     */
-    public function booting_registers_our_commands()
+    public function test_booting_registers_our_commands(): void
     {
         $serviceProvider = new TestServiceProvider($this->container);
         $serviceProvider->boot();
@@ -175,9 +163,9 @@ class ServiceProviderTest extends TestCase
 
 class TestServiceProvider extends ServiceProvider
 {
-    public $commands;
+    public array $commands;
 
-    public function commands($commands)
+    public function commands($commands): void
     {
         $this->commands = $commands;
     }

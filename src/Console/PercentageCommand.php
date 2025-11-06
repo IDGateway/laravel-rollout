@@ -2,6 +2,8 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
+
 class PercentageCommand extends RolloutCommand
 {
     /**
@@ -20,10 +22,8 @@ class PercentageCommand extends RolloutCommand
 
     /**
      * Updates the rollout percentage to the provided value.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $percentage = $this->argument('percentage');
@@ -31,5 +31,7 @@ class PercentageCommand extends RolloutCommand
         $this->rollout->activatePercentage($name, $percentage);
 
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

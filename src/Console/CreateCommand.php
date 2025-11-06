@@ -2,6 +2,8 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
+
 class CreateCommand extends RolloutCommand
 {
     /**
@@ -20,12 +22,12 @@ class CreateCommand extends RolloutCommand
 
     /**
      * Creates the provided feature.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

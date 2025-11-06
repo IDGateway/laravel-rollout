@@ -2,6 +2,8 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
+
 class AddGroupCommand extends RolloutCommand
 {
     /**
@@ -21,10 +23,8 @@ class AddGroupCommand extends RolloutCommand
     /**
      * Adds the provided group to the requested feature. Note this will create
      * the feature as a side effect.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $group = $this->argument('group');
@@ -32,5 +32,7 @@ class AddGroupCommand extends RolloutCommand
         $this->rollout->activateGroup($name, $group);
 
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

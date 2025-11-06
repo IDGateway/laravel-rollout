@@ -2,6 +2,7 @@
 
 namespace Jaspaul\LaravelRollout\Console;
 
+use Illuminate\Console\Command;
 use Jaspaul\LaravelRollout\Helpers\User;
 
 class DeactivateCommand extends RolloutCommand
@@ -22,13 +23,13 @@ class DeactivateCommand extends RolloutCommand
 
     /**
      * Deactivates the feature for everyone.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->argument('feature');
         $this->rollout->deactivate($name);
         $this->renderFeatureAsTable($name);
+
+        return Command::SUCCESS;
     }
 }

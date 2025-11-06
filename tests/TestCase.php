@@ -2,16 +2,26 @@
 
 namespace Tests;
 
+use Illuminate\Foundation\Application;
 use Mockery;
 use Orchestra\Testbench\TestCase as Base;
 use Jaspaul\LaravelRollout\ServiceProvider;
 
 abstract class TestCase extends Base
 {
-    /**
-     * @before
-     */
-    protected function setUpMockery()
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->setUpMockery();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->close_mockery();
+        parent::tearDown();
+    }
+
+    protected function setUpMockery(): void
     {
         Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
     }
@@ -28,10 +38,7 @@ abstract class TestCase extends Base
         ];
     }
 
-    /**
-     * @after
-     */
-    protected function close_mockery()
+    protected function close_mockery(): void
     {
         Mockery::close();
     }
